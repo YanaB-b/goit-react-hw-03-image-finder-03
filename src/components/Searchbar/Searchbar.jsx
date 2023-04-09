@@ -25,7 +25,7 @@ class Searchbar extends Component {
         <form className={css.searchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={css.searchFormButton}>
              {/* <span className={css.searchFormButtonLabel}>Search</span>  */}
-            <FcSearch />
+            {/* <FcSearch /> */}
           </button>
 
           <input

@@ -6,13 +6,13 @@ import css from './ImageGallery.module.css';
   render(){
   return (
     <ul className={css.gallery}>
-           {images.map(({ id, webformatURL, tags, largeImageURL }) => (
+           {this.props.images.map(({ id, webformatURL, tags, largeImageURL }) => (
           <ImageGalleryItem
           id={id}
             key={id}
             webformatURL={webformatURL}
             tags={tags}
-            onSelect={() => onSelect(largeImageURL)}
+            onSelect={() => this.props.onSelect(largeImageURL)}
           />
         ))}
     </ul>
