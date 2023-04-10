@@ -1,13 +1,13 @@
 import css from './Searchbar.module.css';
 import PropTypes from 'prop-types';
 import { Component } from 'react';
-import { FcSearch } from 'react-icons/fa';
+import { FaSearch } from 'react-icons/fa';
 class Searchbar extends Component {
   state = {
     query: '',
   };
-  handleChange = ({target:{query,value}})=>{
-    this.setState({[query]: value})
+  handleChange = ({target:{value}})=>{
+    this.setState({query: value})
   }
 
   handleSubmit = e => {
@@ -25,7 +25,7 @@ class Searchbar extends Component {
         <form className={css.searchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={css.searchFormButton}>
              {/* <span className={css.searchFormButtonLabel}>Search</span>  */}
-            <FcSearch />
+            <FaSearch />
           </button>
 
           <input

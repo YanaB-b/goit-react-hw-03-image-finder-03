@@ -18,8 +18,8 @@ class Modal extends Component {
     }
   };
 
-  handleChange = event => {
-    if (event.currentTarget === event.target) {
+  handleChange = e => {
+    if (e.currentTarget === e.target) {
       this.props.onClose();
     }
   };
