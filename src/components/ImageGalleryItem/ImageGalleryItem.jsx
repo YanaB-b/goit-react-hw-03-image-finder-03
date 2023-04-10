@@ -1,6 +1,6 @@
 import css from './ImageGalleryItem.module.css';
 import { Component } from 'react';
-import PropTypes from 'prop-types';
+
 
 class ImageGalleryItem extends Component {
   onClick = () => {

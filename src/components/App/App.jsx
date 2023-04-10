@@ -4,7 +4,7 @@ import  ImageGallery from '../ImageGallery/ImageGallery';
 import  Button  from '../Button/Button';
 import  Modal  from '../Modal/Modal';
 import Loader  from '../Loader/Loader';
-import {onImages} from '../NewsApiService';
+import {getImages} from '../NewsApiService';
 import css from './App.module.css';
 export class App extends Component {
   state = {
@@ -13,7 +13,7 @@ export class App extends Component {
     currentPage: 1,
     selectedImage: null,
     isShowModal: false,
-    isShowLoadmore: false,
+    loadMore: false,
     status: 'idle',
   };
 
@@ -27,7 +27,7 @@ export class App extends Component {
   }
   onImages = () => {
    
-    onImages(this.state.nameValue, this.state.currentPage)
+    getImages(this.state.nameValue, this.state.currentPage)
       .then(images => {
         this.setState(prevState => ({
           images: [...prevState.images, ...images.hits],
