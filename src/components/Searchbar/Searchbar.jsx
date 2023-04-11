@@ -6,9 +6,9 @@ class Searchbar extends Component {
   state = {
     query: '',
   };
-  handleChange = ({target:{value}})=>{
-    this.setState({query: value})
-  }
+  handleChange = ({ target: { value } }) => {
+    this.setState({ query: value });
+  };
 
   handleSubmit = e => {
     e.preventDefault();
@@ -24,7 +24,7 @@ class Searchbar extends Component {
       <header className={css.searchbar}>
         <form className={css.searchForm} onSubmit={this.handleSubmit}>
           <button type="submit" className={css.searchFormButton}>
-             {/* <span className={css.searchFormButtonLabel}>Search</span>  */}
+            {/* <span className={css.searchFormButtonLabel}>Search</span>  */}
             <FaSearch />
           </button>
 
@@ -42,7 +42,7 @@ class Searchbar extends Component {
   }
 }
 
-Searchbar.propTypes ={
+Searchbar.propTypes = {
   onSubmit: PropTypes.func.isRequired,
-}
+};
 export default Searchbar;

@@ -4,5 +4,5 @@ const URL = 'https://pixabay.com/api/';
 export function getImages(nameValue = '', currentPage = 1) {
   return fetch(
     `${URL}?q=${nameValue}&page=${currentPage}&key=${KEY}&image_type=photo&orientation=horizontal&per_page=12`
-    ).then(res => res.json());
+  ).then(res => res.json());
 }

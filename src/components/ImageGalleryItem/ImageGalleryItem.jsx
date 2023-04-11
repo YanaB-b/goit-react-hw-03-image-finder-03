@@ -1,7 +1,6 @@
 import css from './ImageGalleryItem.module.css';
 import { Component } from 'react';
 
-
 class ImageGalleryItem extends Component {
   onClick = () => {
     this.props.onSelect(this.props.largeImageURL);

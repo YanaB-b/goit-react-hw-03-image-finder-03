@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
-import  Searchbar  from '../Searchbar/Searchbar';
-import  ImageGallery from '../ImageGallery/ImageGallery';
-import  Button  from '../Button/Button';
-import  Modal  from '../Modal/Modal';
-import Loader  from '../Loader/Loader';
-import {getImages} from '../NewsApiService';
+import Searchbar from '../Searchbar/Searchbar';
+import ImageGallery from '../ImageGallery/ImageGallery';
+import Button from '../Button/Button';
+import Modal from '../Modal/Modal';
+import Loader from '../Loader/Loader';
+import { getImages } from '../NewsApiService';
 import css from './App.module.css';
 export class App extends Component {
   state = {
@@ -17,7 +17,7 @@ export class App extends Component {
     status: 'idle',
   };
 
-  componentDidUpdate(prevState) {
+  componentDidUpdate(prevProps, prevState) {
     if (
       prevState.nameValue !== this.state.nameValue ||
       prevState.currentPage !== this.state.currentPage
@@ -26,15 +26,12 @@ export class App extends Component {
     }
   }
   onImages = () => {
-   
     getImages(this.state.nameValue, this.state.currentPage)
       .then(images => {
         this.setState(prevState => ({
           images: [...prevState.images, ...images.hits],
-         loadMore:
-            this.state.currentPage < Math.ceil(images.totalHits / 12),
+          loadMore: this.state.currentPage < Math.ceil(images.totalHits / 12),
           status: 'resolved',
-          
         }));
       })
       .catch(error => this.setState({ error, status: 'rejected' }));
@@ -57,24 +54,21 @@ export class App extends Component {
   };
 
   handleOpen = () => {
-    this.setState(
-      prevState => ({
-        currentPage: prevState.currentPage + 1,
-      })
-    );
+    this.setState(prevState => ({
+      currentPage: prevState.currentPage + 1,
+    }));
   };
 
   render() {
-    
     return (
       <div>
         <Searchbar onSubmit={this.handleChecked}></Searchbar>
         {this.state.status === 'idle' && (
-          <h2 className ={css.title}>Please enter your search query</h2>
+          <h2 className={css.appTitle}>Please enter your search query</h2>
         )}
         {this.state.status === 'pending' && <Loader />}
         {this.state.status === 'rejected' && (
-          <h2 className ={css.title}>
+          <h2 className={css.appTitle}>
             Oops, something went wrong. Please try again later.
           </h2>
         )}
@@ -82,13 +76,16 @@ export class App extends Component {
           <>
             {this.state.images.length > 0 ? (
               <>
-                <ImageGallery images={this.state.images} onSelect={this.onSelect} />
+                <ImageGallery
+                  images={this.state.images}
+                  onSelect={this.onSelect}
+                />
                 {this.state.loadMore && (
                   <Button onClick={this.handleOpen}>Load more</Button>
                 )}
               </>
             ) : (
-              <h2 className ={css.title}>
+              <h2 className={css.appTitle}>
                 Nothing was found. Please try another search.
               </h2>
             )}
