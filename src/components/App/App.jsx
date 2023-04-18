@@ -15,6 +15,7 @@ export class App extends Component {
     isShowModal: false,
     loadMore: false,
     status: 'idle',
+    isLoading: false,
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -22,6 +23,7 @@ export class App extends Component {
       prevState.nameValue !== this.state.nameValue ||
       prevState.currentPage !== this.state.currentPage
     ) {
+      this.setState({ isLoading: true });
       this.onImages();
     }
   }
@@ -34,8 +36,10 @@ export class App extends Component {
           status: 'resolved',
         }));
       })
-      .catch(error => this.setState({ error, status: 'rejected' }));
+      .catch(error => this.setState({ error, status: 'rejected' }))
+      .finally(() => this.setState({ isLoading: false,status: 'pending' }));
   };
+
   handleChecked = nameValue => {
     this.setState({
       nameValue,

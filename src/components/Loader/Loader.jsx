@@ -1,16 +1,15 @@
 import { ThreeDots } from 'react-loader-spinner';
-
+import css from './Loader.module.css';
 const Loader = () => {
   return (
-    <button type="button">
+    <button type="button" className={css.loader}>
       <ThreeDots
         height="80"
         width="80"
         radius="9"
-        color="#4fa94d"
+        color="#303f9f"
         ariaLabel="three-dots-loading"
         wrapperStyle={{}}
-        wrapperClassName=""
         visible={true}
       />
     </button>
