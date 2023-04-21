@@ -14,7 +14,6 @@ export class App extends Component {
     selectedImage: null,
     isShowModal: false,
     loadMore: false,
-    status: 'idle',
     isLoading: false,
   };
 
@@ -24,20 +23,27 @@ export class App extends Component {
       prevState.currentPage !== this.state.currentPage
     ) {
       this.setState({ isLoading: true });
+
       this.onImages();
     }
   }
   onImages = () => {
     getImages(this.state.nameValue, this.state.currentPage)
+    
       .then(images => {
         this.setState(prevState => ({
           images: [...prevState.images, ...images.hits],
           loadMore: this.state.currentPage < Math.ceil(images.totalHits / 12),
           status: 'resolved',
-        }));
+        }))
+        .then(()=>{
+          if (this.state.images === [])
+          return   <h2>Please enter your search query</h2>
+        })
+        
       })
       .catch(error => this.setState({ error, status: 'rejected' }))
-      .finally(() => this.setState({ isLoading: false,status: 'pending' }));
+      .finally(() => this.setState({ isLoading: false}));
   };
 
   handleChecked = nameValue => {
@@ -67,10 +73,8 @@ export class App extends Component {
     return (
       <div>
         <Searchbar onSubmit={this.handleChecked}></Searchbar>
-        {this.state.status === 'idle' && (
-          <h2 className={css.appTitle}>Please enter your search query</h2>
-        )}
-        {this.state.status === 'pending' && <Loader />}
+      
+        { this.state.isLoading && <Loader />}
         {this.state.status === 'rejected' && (
           <h2 className={css.appTitle}>
             Oops, something went wrong. Please try again later.
