@@ -15,6 +15,7 @@ export class App extends Component {
     isShowModal: false,
     loadMore: false,
     isLoading: false,
+    // status: 'idle',
   };
 
   componentDidUpdate(prevProps, prevState) {
@@ -29,21 +30,20 @@ export class App extends Component {
   }
   onImages = () => {
     getImages(this.state.nameValue, this.state.currentPage)
-    
       .then(images => {
         this.setState(prevState => ({
           images: [...prevState.images, ...images.hits],
           loadMore: this.state.currentPage < Math.ceil(images.totalHits / 12),
           status: 'resolved',
         }))
-        .then(()=>{
-          if (this.state.images === [])
-          return   <h2>Please enter your search query</h2>
-        })
-        
       })
+      .then(()=>{
+        if (this.state.images === [])
+        return   <h2>Please enter your search query</h2>
+      })
+
       .catch(error => this.setState({ error, status: 'rejected' }))
-      .finally(() => this.setState({ isLoading: false}));
+      .finally(() => this.setState({ isLoading: false }));
   };
 
   handleChecked = nameValue => {
@@ -73,8 +73,10 @@ export class App extends Component {
     return (
       <div>
         <Searchbar onSubmit={this.handleChecked}></Searchbar>
-      
-        { this.state.isLoading && <Loader />}
+        {/* {this.state.status === 'idle' && (
+          <h2 className={css.appTitle}>Please enter your search query</h2>
+        )} */}
+
         {this.state.status === 'rejected' && (
           <h2 className={css.appTitle}>
             Oops, something went wrong. Please try again later.
@@ -88,6 +90,7 @@ export class App extends Component {
                   images={this.state.images}
                   onSelect={this.onSelect}
                 />
+
                 {this.state.loadMore && (
                   <Button onClick={this.handleOpen}>Load more</Button>
                 )}
@@ -99,6 +102,7 @@ export class App extends Component {
             )}
           </>
         )}
+        {this.state.isLoading && <Loader />}
         {this.state.isShowModal && (
           <Modal
             onClose={this.toggleModal}
